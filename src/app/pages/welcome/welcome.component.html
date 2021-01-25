@@ -1,0 +1,56 @@
+<label> 1. input-number [ใช้ regex ทำ formatt เอง ส่งเป็น arrow Fn]</label
+><br />
+<nz-input-number
+  nzInputMode="text"
+  [nzMin]="1"
+  [nzMax]="1000000"
+  [nzStep]="1"
+  [nzFormatter]="formatter"
+></nz-input-number>
+&nbsp;&nbsp;
+<nz-input-number
+  nzInputMode="text"
+  [nzMin]="1"
+  [nzMax]="1000000"
+  [nzStep]="1"
+  [nzFormatter]="formatterBath"
+  [nzParser]="parserBath"
+></nz-input-number>
+<br />
+<label> 1. icon ทำ Two tone + หมุน + ปรับเอียงได้</label><br />
+<i
+  nz-icon
+  [nzType]="'home'"
+  style="font-size: 30px; color: #08c"
+  [nzTheme]="'fill'"
+></i>
+fill
+<i
+  nz-icon
+  [nzType]="'setting'"
+  style="font-size: 30px"
+  [nzTheme]="'twotone'"
+  [nzSpin]="true"
+></i>
+twotone
+<i
+  nz-icon
+  [nzType]="'smile'"
+  style="font-size: 30px; color: #08c"
+  [nzTheme]="'outline'"
+  [nzRotate]="90"
+></i>
+outline
+<br />
+Date
+<div class="row">
+  <div class="col-xs-12 col-12 col-sm-5 col-md-6 col-lg-4 form-group">
+    <input placeholder="Datepicker" type="text" class="form-control" bsDatepicker #dp="bsDatepicker">
+  </div>
+</div>
+
+<br />
+<h2>modal</h2>
+<app-test></app-test>
+<!-- <a routerLink="child-a">Child A</a> -->
+<!-- <router-outlet name="test"></router-outlet> -->

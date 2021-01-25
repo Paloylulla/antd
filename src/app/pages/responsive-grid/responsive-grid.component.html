@@ -1,0 +1,43 @@
+<h2>Responsive</h2>
+<label>[nzGutter] กำหนด Padding ซ้าย-ขวา/บน-ล่าง (สามารถกำหนดตามขนาก responsive ของหน้าจอได้)</label>
+<!-- [nzGutter]="[
+{ xs: 8, sm: 16, md: 24, lg: 32 },
+{ xs: 8, sm: 8, md: 8, lg: 8 }
+]" -->
+<div
+  nz-row
+  [nzGutter] = "[16, 8]"
+>
+  <div nz-col class="gutter-row" nzXs="24" nzSm="12" nzMd="12">
+    <input nz-input type="text" />
+  </div>
+  <div nz-col class="gutter-row" nzXs="24" nzSm="12" nzMd="12">
+    <input nz-input type="text" />
+  </div>
+  <div nz-col nzSpan="8"><input nz-input /></div>
+  <div nz-col nzSpan="8"><input nz-input /></div>
+  <div nz-col nzSpan="8"><input nz-input /></div>
+  <div nz-col class="gutter-row" nzXs="2" nzSm="6" nzMd="12">
+    <input nz-input type="text" />
+  </div>
+  <div nz-col class="gutter-row" nzXs="2" nzSm="6" nzMd="12">
+    <input nz-input type="text" />
+  </div>
+</div>
+
+<nz-table #basicTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th>prefix</th>
+      <th>MediaQuery</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.prefix }}</td>
+      <td>{{ data.MediaQuery }}</td>
+      <td>{{ data.Example }}</td>
+    </tr>
+  </tbody>
+</nz-table>

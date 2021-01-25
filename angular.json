@@ -28,9 +28,17 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/theme.less",
               "src/styles.scss"
             ],
             "scripts": []
@@ -94,6 +102,8 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -127,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "hello-ant"
+  "defaultProject": "hello-ant",
+  "cli": {
+    "analytics": "5d4aaf90-886b-466c-b62d-e6399fb8ce34"
+  }
 }

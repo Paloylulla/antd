@@ -1,0 +1,215 @@
+<form
+  nz-form
+  [formGroup]="validateForm"
+  class="ant-advanced-search-form"
+  (ngSubmit)="submitForm()"
+>
+  <div nz-row [nzGutter]="24" nzJustify="center">
+    <div nz-col nzMd="10" nzXXl="8">
+      <nz-form-item>
+        <nz-form-label nzFor="email" nzRequired>พิมพ์ค้นหา</nz-form-label>
+        <nz-form-control nzErrorTip="กรุณาเลือกสายการบิน">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            formControlName="searchId1"
+            [nzLoading]="!listOfOption2.length"
+            nzMode="default"
+            nzPlaceHolder="เลือกสายการบิน"
+            (ngModelChange)="airlinesChange($event)"
+          >
+            <nz-option
+              *ngFor="let option of listOfOption2"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzMd="10" nzXXl="8">
+      <nz-form-item>
+        <nz-form-label nzFor="email" nzRequired
+          >Load Data on Scroll</nz-form-label
+        >
+        <nz-form-control nzErrorTip="กรุณาเลือกสายการบิน">
+          <nz-select
+            formControlName="searchId2"
+            (nzScrollToBottom)="loadMore()"
+            nzPlaceHolder="Select users"
+            nzAllowClear
+            [nzLoading]="!optionList.length"
+            [nzDropdownRender]="renderTemplate"
+          >
+            <nz-option
+              *ngFor="let o of optionList"
+              [nzValue]="o.value"
+              [nzLabel]="o.label"
+            ></nz-option>
+          </nz-select>
+          <ng-template #renderTemplate>
+            <nz-spin *ngIf="isLoading"></nz-spin>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" nzJustify="center">
+    <div nz-col nzMd="10" nzXXl="8">
+      <nz-form-item>
+        <nz-form-label nzFor="email" nzRequired>พิมพ์ค้น + chips</nz-form-label>
+        <nz-form-control nzErrorTip="กรุณาเลือกสายการบิน">
+          <nz-select
+            [nzMaxTagCount]="3"
+            [nzLoading]="!listOfOption2.length"
+            [nzMaxTagPlaceholder]="tagPlaceHolder"
+            [nzMaxMultipleCount]="4"
+            nzMode="multiple"
+            nzPlaceHolder="Please select"
+            formControlName="searchId3"
+          >
+            <nz-option
+              *ngFor="let item of listOfOption2"
+              [nzLabel]="item.label"
+              [nzValue]="item.value"
+            ></nz-option>
+          </nz-select>
+          <ng-template #tagPlaceHolder let-selectedList>
+            and {{ selectedList.length }} more selected
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <button nz-button [nzType]="'primary'">Search</button>
+  </div>
+</form>
+<div class="search-result-list">
+  <nz-table
+    #fixedTable
+    [nzData]="searchResults"
+    [nzScroll]="{ x: '1000px', y: '240px' }"
+  >
+    <thead>
+      <tr>
+        <th nzLeft>โลโก้</th>
+        <th nzLeft>ชื่อสายการบิน</th>
+        <th>เมือง</th>
+        <th>สำนักงานใหญ่</th>
+        <th>website</th>
+        <th>ก่อตั้งเมื่อปี</th>
+        <th nzRight [nzWidth]="'100px'">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of fixedTable.data">
+        <ng-container *ngIf="!editCache[data.id]?.edit; else editTemplate">
+          <td nzLeft>{{ data.logo }}</td>
+          <td nzLeft>{{ data.name }}</td>
+          <td nzBreakWord>{{ data.country }}</td>
+          <td nzBreakWord>{{ data.head_quaters }}</td>
+          <td nzBreakWord>{{ data.website }}</td>
+          <td nzBreakWord>{{ data.established }}</td>
+          <td nzRight>
+            <a (click)="startEdit(data.id)">แก้ไข</a>
+          </td>
+        </ng-container>
+
+        <ng-template #editTemplate>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.logo"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.name"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.country"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.head_quaters"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.established"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              nz-input
+              [(ngModel)]="editCache[data.id].data.website"
+            />
+          </td>
+          <td nzRight class="fix-right">
+            <!-- <a (click)="saveEdit(data.id)" class="save">Save</a> -->
+
+            <button
+            nz-button
+            nzType="primary"
+            [nzSize]="'small'"
+            nzShape="circle"
+
+
+            nz-popconfirm
+            nzPopconfirmTitle="ต้องการบันทึก?"
+            (nzOnConfirm)="saveEdit(data.id)"
+            (nzOnCancel)="cancel()"
+          >
+            /
+          </button>
+
+            <button
+              nz-button
+              nzType="primary"
+              [nzSize]="'small'"
+              nzShape="circle"
+
+
+              nz-popconfirm
+              nzPopconfirmTitle="ต้องการยกเลิก ?"
+              (nzOnConfirm)="confirm(data.id)"
+              (nzOnCancel)="cancel()"
+            >
+              x
+            </button>
+
+            <!-- <a
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure?"
+              nzOkText="ok"
+              nzCancelText="cancel"
+              (nzOnConfirm)="confirm(data.id)"
+              (nzOnCancel)="cancel()"
+              >delete</a
+            > -->
+            <!-- <a
+              nz-popconfirm
+              nzPopconfirmTitle="Sure to cancel?"
+              (nzOnConfirm)="cancelEdit(data.id)"
+              >Cancel</a
+            > -->
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
